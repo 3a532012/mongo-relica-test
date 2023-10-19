@@ -1,0 +1,78 @@
+# version: '3'
+# services:
+#   db1:
+#     image: mongo:latest
+#     container_name: db1
+#     ports:
+#       - 27017:27017
+#     command: ["mongod", "--replSet", "rs0","--bind_ip_all"]
+#     links:
+#       - "db2"
+#     networks:
+#       - test
+#   db2:
+#     image: mongo:latest
+#     container_name: db2
+#     ports:
+#       - 27018:27017
+#     command: ["mongod", "--replSet", "rs0","--bind_ip_all"]
+#     networks:
+#       - test
+#   db3:
+#     image: mongo:latest
+#     container_name: db3
+#     ports:
+#       - 27019:27017
+#     command: ["mongod", "--replSet", "rs0"]
+#     networks:
+#       - test
+#   db4:
+#     image: mongo:latest
+#     container_name: db4
+#     ports:
+#       - 27020:27017
+#     command: ["mongod", "--replSet", "rs0"]
+#     networks:
+#       - test
+# networks:
+#   test:
+
+version: '3'
+services:
+  db1:
+    image: test
+    container_name: db1
+    ports:
+      - 27017:27017
+    depends_on:
+      - db2
+      - db3
+      - db4
+    networks:
+      - test
+  db2:
+    image: mongo:latest
+    container_name: db2
+    ports:
+      - 27018:27017
+    command: ["mongod", "--replSet", "rs0","--bind_ip_all"]
+    networks:
+      - test
+  db3:
+    image: mongo:latest
+    container_name: db3
+    ports:
+      - 27019:27017
+    command: ["mongod", "--replSet", "rs0"]
+    networks:
+      - test
+  db4:
+    image: mongo:latest
+    container_name: db4
+    ports:
+      - 27020:27017
+    command: ["mongod", "--replSet", "rs0"]
+    networks:
+      - test
+networks:
+  test:
